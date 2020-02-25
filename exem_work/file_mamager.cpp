@@ -62,3 +62,6 @@ void file_mamager::Delete_file() {
 	//this->curent_place = this->curent_place.parent_path();
 	std::cout << this->curent_place << std::endl;
 }
+
+void file_mamager::find_file_or_directory() {}
+void file_mamager::Count_size_of_directory() {}
