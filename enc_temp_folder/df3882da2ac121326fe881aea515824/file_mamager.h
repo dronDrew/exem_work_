@@ -13,6 +13,6 @@ public:
 	void Delete_file_and_directory();//done
 	void Delete_file();//done
 	void find_file_or_directory();
-	void Count_size_of_directory();
+	void Count_sixe_of_directory();
 };
 

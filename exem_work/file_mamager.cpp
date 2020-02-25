@@ -3,9 +3,12 @@ file_mamager::file_mamager() {
 	this->curent_place =std::filesystem::current_path();
 }
 void file_mamager::Print_directory() {
+	try
+	{
 
+	
 	std::cout << "You in  directory : " << this->curent_place.u8string() <<"\nIn this directory is such element :"<< std::endl;
-	std::filesystem::recursive_directory_iterator begin(this->curent_place.parent_path());
+	std::filesystem::recursive_directory_iterator begin(this->curent_place);
 	std::filesystem::recursive_directory_iterator end;
 	std::vector<std::filesystem::path> subdirs;
 	std::copy_if(begin, end, std::back_inserter(subdirs), [](const std::filesystem::path& path) {
@@ -15,14 +18,19 @@ void file_mamager::Print_directory() {
 	{
 		std::cout << elem.filename() << std::endl;
 	}
-
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what() << std::endl;
+		return;
+	}
 }
 void file_mamager::Create_directory() {
 	std::string temp;
 	std::cout << "Enter path and name of directory for creating\n";
 	std::cin >> temp;
 	this->curent_place = temp;
-	std::cout << this->curent_place << std::endl;
+	std::filesystem::create_directories(this->curent_place);
 }
 void file_mamager::Create_file() {
 	std::string filename;
@@ -36,4 +44,21 @@ void file_mamager::Create_file() {
 	if (file.is_open()) {
 		std::cout << "Succse\n";
 	}
+}
+void file_mamager::Delete_file_and_directory() {
+	std::filesystem::remove_all(this->curent_place);
+	this->curent_place = this->curent_place.parent_path();
+	std::cout << this->curent_place << std::endl;
+}
+void file_mamager::Delete_file() {
+	this->Print_directory();
+	std::string temp;
+	std::cout << "Print name of file to deleting\n";
+	std::cin >> temp;
+	auto temp1 = this->curent_place;
+	temp1+='\\';
+	temp1 += temp;
+	std::filesystem::remove(temp1);
+	//this->curent_place = this->curent_place.parent_path();
+	std::cout << this->curent_place << std::endl;
 }
